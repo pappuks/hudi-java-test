@@ -42,14 +42,10 @@ public class HoodieSparkWriteClientExample {
         }
         String tablePath = args[0];
         String tableName = args[1];
-        // SparkConf sparkConf = HoodieExampleSparkUtils.defaultSparkConf("hoodie-client-example");
-        SparkSession spark = SparkSession
-                .builder()
-                .appName("HoodieSparkWriteClientExample")
-                .config("spark.master", "local")
-                .getOrCreate();
 
-        try (JavaSparkContext jsc = new JavaSparkContext(spark.sparkContext())) {
+        SparkSession sparkSession = HoodieExampleSparkUtils.defaultSparkSession("HoodieSparkWriteClientExample");
+
+        try (JavaSparkContext jsc = new JavaSparkContext(sparkSession.sparkContext())) {
 
             // Generator of some records to be loaded in.
             HoodieExampleDataGenerator<HoodieAvroPayload> dataGen = new HoodieExampleDataGenerator<>();
